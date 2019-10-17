@@ -11,6 +11,9 @@
 #   connor@fishtownanalytics.com.
 
 
+from multiprocessing import Process
+#import time
+
 inlist = []
 
 def process(i):
@@ -19,6 +22,13 @@ def process(i):
     some background processing on it.
     process() should execute in constant time.
     """
+    # multiprocessing.current_process().i
+
+    # used for testing purposes 
+    #print ("Starting %s \n" %name)
+    #time.sleep(3)
+    #print ("Exiting %s \n" %name)
+    
     # process list by updating collection w/ passed in single ints
     inlist.append(i)
     
@@ -135,10 +145,23 @@ def median():
     return int(median) 
 
 
-process(1)
-process(2)
-process(2)
-process(4)
+if __name__ == '__main__':
+    process(1)
+    process(2)
+    process(2)
+    process(4)
+
+    p = Process(target=process, args=(int,))
+    p.start()
+    p.join()
+    
+    #background_process = multiprocessing.Process\
+    #                     (name='background_process',\
+    #                     target=process, args=(int,))
+    #background_process.daemon = True
+    
+    #background_process.start()
+
 
 print(min())  # should print "1"
 print(avg())  # should print "2.25"
