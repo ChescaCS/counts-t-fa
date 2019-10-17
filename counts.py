@@ -12,52 +12,9 @@
 
 
 from multiprocessing import Process
-# import time
-import os
+# import os - used for testing purposes 
 
 inlist = []
-
-# for testing purposes 
-def info(title):
-    print(title)
-    print('module name:', __name__)
-    if hasattr(os, 'getppid'):  # only available on Unix
-        print('parent process:', os.getppid())
-    print('process id:', os.getpid())
-
-"""
-output:
-
-main line
-module name: __main__
-parent process: 3984
-process id: 6679
-function process
-module name: __main__
-parent process: 6679
-process id: 6680
-function process
-module name: __main__
-parent process: 3984
-process id: 6679
-function process
-module name: __main__
-parent process: 3984
-process id: 6679
-function process
-module name: __main__
-parent process: 3984
-process id: 6679
-function process
-module name: __main__
-parent process: 3984
-process id: 6679
-1
-2.25
-2
-2
-"""
-
 
 def process(i):
     """
@@ -65,14 +22,6 @@ def process(i):
     some background processing on it.
     process() should execute in constant time.
     """
-    info('function process')
-    # multiprocessing.current_process().i
-
-    # used for testing purposes 
-    #print ("Starting %s \n" %name)
-    #time.sleep(3)
-    #print ("Exiting %s \n" %name)
-
     # process list by updating collection w/ passed in single ints
     inlist.append(i)
     
@@ -188,19 +137,11 @@ def median():
     # use int method to truncate towards 0 (outputs int not decimal)
     return int(median) 
 
-
+# implementing background processes by spawing a Process object & calling its start() method
 if __name__ == '__main__':
-    info('main line')
     p = Process(target=process, args=(int,))
     p.start()
     p.join()
-
-    #background_process = multiprocessing.Process\
-    #                     (name='background_process',\
-    #                     target=process, args=(int,))
-    #background_process.daemon = True
-    
-    #background_process.start()
 
 process(1)
 process(2)
