@@ -40,7 +40,7 @@ def min():
     startTime = time.time()
 
     # check if collection passed to process() so far is empty
-    #assert len(process(s)) > 0, "process() arg is empty sequence"
+    assert len(inlist) > 0, "process() is empty collection"
 
     # assign tmp the first val inside collection 
     tmp = inlist[0]
