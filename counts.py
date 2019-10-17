@@ -12,9 +12,52 @@
 
 
 from multiprocessing import Process
-#import time
+# import time
+import os
 
 inlist = []
+
+# for testing purposes 
+def info(title):
+    print(title)
+    print('module name:', __name__)
+    if hasattr(os, 'getppid'):  # only available on Unix
+        print('parent process:', os.getppid())
+    print('process id:', os.getpid())
+
+"""
+output:
+
+main line
+module name: __main__
+parent process: 3984
+process id: 6679
+function process
+module name: __main__
+parent process: 6679
+process id: 6680
+function process
+module name: __main__
+parent process: 3984
+process id: 6679
+function process
+module name: __main__
+parent process: 3984
+process id: 6679
+function process
+module name: __main__
+parent process: 3984
+process id: 6679
+function process
+module name: __main__
+parent process: 3984
+process id: 6679
+1
+2.25
+2
+2
+"""
+
 
 def process(i):
     """
@@ -22,13 +65,14 @@ def process(i):
     some background processing on it.
     process() should execute in constant time.
     """
+    info('function process')
     # multiprocessing.current_process().i
 
     # used for testing purposes 
     #print ("Starting %s \n" %name)
     #time.sleep(3)
     #print ("Exiting %s \n" %name)
-    
+
     # process list by updating collection w/ passed in single ints
     inlist.append(i)
     
@@ -146,15 +190,11 @@ def median():
 
 
 if __name__ == '__main__':
-    process(1)
-    process(2)
-    process(2)
-    process(4)
-
+    info('main line')
     p = Process(target=process, args=(int,))
     p.start()
     p.join()
-    
+
     #background_process = multiprocessing.Process\
     #                     (name='background_process',\
     #                     target=process, args=(int,))
@@ -162,6 +202,10 @@ if __name__ == '__main__':
     
     #background_process.start()
 
+process(1)
+process(2)
+process(2)
+process(4)
 
 print(min())  # should print "1"
 print(avg())  # should print "2.25"
