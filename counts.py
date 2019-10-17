@@ -10,7 +10,6 @@
 #   When you are done, upload your code to Github and send a link to
 #   connor@fishtownanalytics.com.
 
-
 from multiprocessing import Process
 import time
 # import os - used for testing purposes 
@@ -22,13 +21,11 @@ def process(i):
     process() takes a single integer as an argument and does
     some background processing on it.
     process() should execute in constant time.
+
+    fk: execution time O(1)
     """
-
-    startTime = time.time()
-
+    
     inlist.append(i)
-
-    print('process() runtime: ', time.time() - startTime)
 
 def min():
     """
@@ -37,10 +34,8 @@ def min():
     process() should execute in constant time.
     """
 
-    startTime = time.time()
-
     # check if collection passed to process() so far is empty
-    assert len(inlist) > 0, "process() is empty collection"
+    assert len(inlist) > 0, "process() has empty collection"
 
     # assign tmp the first val inside collection 
     tmp = inlist[0]
@@ -48,7 +43,6 @@ def min():
     for item in inlist:
         if item < tmp:
             tmp = item   
-    print('min() runtime: ', time.time() - startTime)
     return tmp   # return the minimum of all int
 
 def avg():
@@ -56,14 +50,13 @@ def avg():
     avg() returns the average of all of the integers passed
     to process() so far.
     avg() should execute in constant time.
-    """
 
-    startTime = time.time()
+    fk: execution time O(1)
+    """
 
     # call sum method to add up the values in the collection & div by the num of items
     # call len method to compute the # of vals in collection which is divided by sum total 
     mean = sum(inlist) / len(inlist)
-    print('avg() runtime: ', time.time() - startTime)
     return mean  
 
     # alternate method would be calling the reduce method with lamda 
@@ -76,13 +69,13 @@ def mode():
     what's the execution time of mode? can mode() run in constant time?
 
     -      -      -
-    fk answer: the execution time of mode is 1.0013580322265625e-05
+    fk answer: the execution time of mode is linear-time O(N)
+    execution time for mode varied between 1.0013580322265625e-05 to 8.821487426757812e-06
+    with a gradual increase with more input vals
 
     for mode() to run in constant time, it would need to consist of simple statements (basic ops) 
     in order to have the time for each statement beconstant & the total time also be constant O(1)
     """
-
-    startTime = time.time()
 
     # assumption: if more than 1 mode is found, return list of modes instead of single item
 
@@ -115,11 +108,8 @@ def mode():
     if len(modelist) <= 1:
         # for single mode - output single mode
         for item in modelist:
-            print('mode() runtime: ', time.time() - startTime)
             return item
-
     else:   
-        print('mode() runtime: ', time.time() - startTime)
         # more than 1 mode in collection - output list of modes
         return modelist
 
@@ -143,8 +133,6 @@ def median():
     Therefore, the worst-case time is the slowest of the two possibilities: max(time(sequence 1), time(sequence 2))
     For ex, if sequence 1 is O(N) and sequence 2 is O(1)- worst-case time complete if-then-else statement would be O(N)
     """
-    # for testing purposes - to test execution time
-    # startTime = time.time()  
 
     # make copy of list using slice operator  
     copylist = inlist[:] 
@@ -163,28 +151,13 @@ def median():
         mid = len(copylist)//2
         median = copylist[mid]
 
-    # for testing purposes only - testing execution time
-    #print('median() runtime: ', time.time() - startTime)
-
     # use int method to truncate towards 0 (outputs int not decimal)
     return int(median) 
 
 
-# testing function to check run time
-def calcRunTime(function, *args):  
-    """
-    running a function & returning run time w/ result of function
-    for func like process which require arg, can be passed in for testing purposes
-    """
-
-    startTime = time.time()
-
-    result = function(*args)
-
-    return time.time() - startTime, result
-
-
 if __name__ == '__main__': 
+    # as per instructions for process to perform "some" background processing on its incoming arg
+    # for background processing using process to spawn processes
     p = Process(target=process, args=(int,))
     p.start()
     p.join()
@@ -200,3 +173,20 @@ print(min())  # should print "1"
 print(avg())  # should print "2.25"
 print(mode())  # should print "2"
 print(median())  # should print "2"
+
+
+"""
+Helper function to test execution time:
+
+def calcRunTime(function, *args):  
+    
+    # running a function & returning run time w/ result of function
+    # for func like process which require arg, can be passed in for testing purposes
+    
+    startTime = time.time()
+
+    result = function(*args)
+
+    return time.time() - startTime, result
+
+"""
